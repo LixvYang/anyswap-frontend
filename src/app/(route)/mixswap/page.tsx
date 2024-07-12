@@ -1,28 +1,18 @@
-import React, { Suspense } from "react";
-import { SwapStoreProvider } from "./providers/SwapProviders";
-import SwapCard from "@/app/components/SwapCard";
-import { SwapItem } from "../../types";
+import MixswapCard from "@/app/components/MixswapCard";
+import { Suspense } from "react";
+import { fetchMixswapTokenList } from "@/lib/actions";
 import { Card } from "@nextui-org/card";
 import { Skeleton } from "@nextui-org/skeleton";
-import { getAnySwapCoinList } from "@/lib/actions";
+import { toast } from "react-toastify";
 
-export default async function App() {
-  const coinList: SwapItem[] = await getAnySwapCoinList();
+const MixSwapPage = async () => {
+  const tokenList = await fetchMixswapTokenList();
 
   return (
-    <div className="flex flex-col items-center justify-center w-full">
-      <h1 className="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
-        <span className="text-transparent bg-clip-text bg-gradient-to-r to-purple-600 from-red-400">
-          Swap
-        </span>
-        <span className="col-span-2 text-gray-800 dark:text-gray-200 ">
-          &nbsp;More&nbsp;Coin.
-        </span>
-      </h1>
-
+    <div className="flex flex-col items-center w-full">
       <Suspense
         fallback={
-          <>
+          <div>
             <Card className="w-[1/2] space-y-5 p-4" radius="lg">
               <Skeleton className="rounded-lg">
                 <div className="h-24 rounded-lg bg-default-300"></div>
@@ -39,13 +29,13 @@ export default async function App() {
                 </Skeleton>
               </div>
             </Card>
-          </>
+          </div>
         }
       >
-        <SwapStoreProvider>
-          <SwapCard coinList={coinList} />
-        </SwapStoreProvider>
+        <MixswapCard tokenList={tokenList} />
       </Suspense>
     </div>
   );
-}
+};
+
+export default MixSwapPage;
