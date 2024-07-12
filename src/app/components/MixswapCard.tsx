@@ -12,7 +12,8 @@ import { Card, CardBody, CardHeader } from "@nextui-org/card";
 import React, { useEffect, useMemo, useRef } from "react";
 import { Button } from "@nextui-org/button";
 import { MdSwapVert } from "react-icons/md";
-import { Listbox, ListboxItem, Select, SelectItem } from "@nextui-org/react";
+import { Listbox, ListboxItem } from "@nextui-org/listbox";
+import { Select, SelectItem } from "@nextui-org/select";
 
 import {
   Modal,
@@ -22,30 +23,20 @@ import {
   ModalFooter,
   useDisclosure,
 } from "@nextui-org/modal";
-import Image from "next/image";
 import MixswapSelectItem from "./Mixswap/SelectItem";
 import { useMixswapStore } from "../providers/MixswapProviders";
 import WalletConnection from "./WalletConnection";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
-import Link from "next/link";
-import { FaExternalLinkAlt } from "react-icons/fa";
 import {
-  Keypair,
   LAMPORTS_PER_SOL,
   PublicKey,
-  sendAndConfirmTransaction,
-  Transaction,
   VersionedTransaction,
 } from "@solana/web3.js";
-import QuoteResult from "./Mixswap/QuoteRes";
-import ShortAddress from "./Mixswap/ShortAddress";
-import MixswapIcon from "./Mixswap/Icon";
 import ListItem from "./Mixswap/ListItem";
 import QuoteRes from "./Mixswap/QuoteRes";
 import { IoIosRefresh } from "react-icons/io";
 import { CiWallet } from "react-icons/ci";
 import { toast } from "react-toastify";
-import { debounce, throttle } from "lodash";
 
 interface MixswapCardProps {
   tokenList: MixswapToken[];

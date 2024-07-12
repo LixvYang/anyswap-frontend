@@ -9,8 +9,8 @@ import {
   NavbarMenuToggle,
   NavbarMenu,
   NavbarMenuItem,
-  Link,
-} from "@nextui-org/react";
+} from "@nextui-org/navbar";
+import { Link } from "@nextui-org/link";
 import { ThemeSwitch } from "./theme-switch";
 import Image from "next/image";
 import WalletConnection from "./WalletConnection";
