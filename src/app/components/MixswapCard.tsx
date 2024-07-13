@@ -143,13 +143,14 @@ const MixswapCard = ({ tokenList }: MixswapCardProps) => {
 
           const tx = VersionedTransaction.deserialize(txBuffer);
           const signature = await sendTransaction(tx, connection);
-          const latestBlockHash = await connection.getLatestBlockhash();
-          await connection.confirmTransaction(
-            {
-              blockhash: latestBlockHash.blockhash,
-              lastValidBlockHeight: latestBlockHash.lastValidBlockHeight,
-              signature: signature,
-            },
+          // const latestBlockHash = await connection.getLatestBlockhash();
+          const signatureRes = await connection.confirmTransaction(
+            // {
+            //   blockhash: latestBlockHash.blockhash,
+            //   lastValidBlockHeight: latestBlockHash.lastValidBlockHeight,
+            //   signature: signature,
+            // },
+            signature,
             "confirmed"
           );
 
