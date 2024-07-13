@@ -30,6 +30,7 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import {
   LAMPORTS_PER_SOL,
   PublicKey,
+  sendAndConfirmTransaction,
   VersionedTransaction,
 } from "@solana/web3.js";
 import ListItem from "./Mixswap/ListItem";
@@ -68,7 +69,7 @@ async function swapToken(
     inAmount: Number(request.data.inAmount),
     slippage: slippage,
     source: request.data.source,
-    referral: "J6NDy2dSynsDHnEUqxMbhMSqnqfAW4zTgv3RAdHajT35",
+    referral: "Eyg91Sc3kWr1arHoLgRJEzqVyRncRKzA2tEWNwf62bxr",
   };
 
   const response = await fetch(`/api/mixin/swap`, {
@@ -140,7 +141,7 @@ const MixswapCard = ({ tokenList }: MixswapCardProps) => {
         try {
           const tx = VersionedTransaction.deserialize(txBuffer);
           const signature = await sendTransaction(tx, connection, {});
-          await connection.confirmTransaction(signature, "finalized");
+          await connection.confirmTransaction(signature, "confirmed");
           resolve(signature as any);
 
           toast(
@@ -149,7 +150,7 @@ const MixswapCard = ({ tokenList }: MixswapCardProps) => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              View tx on Solscan
+              <span color="secondary">View tx on Solscan</span>
             </a>,
             {
               position: "bottom-right",
