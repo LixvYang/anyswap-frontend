@@ -169,6 +169,7 @@ const MixswapCard = ({ tokenList }: MixswapCardProps) => {
             }
           );
         } catch (error) {
+          alert(error);
           reject(error);
         }
       }),
