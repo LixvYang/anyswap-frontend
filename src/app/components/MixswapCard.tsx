@@ -30,7 +30,6 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import {
   LAMPORTS_PER_SOL,
   PublicKey,
-  sendAndConfirmTransaction,
   VersionedTransaction,
 } from "@solana/web3.js";
 import ListItem from "./Mixswap/ListItem";
@@ -69,7 +68,7 @@ async function swapToken(
     inAmount: Number(request.data.inAmount),
     slippage: slippage,
     source: request.data.source,
-    referral: "Eyg91Sc3kWr1arHoLgRJEzqVyRncRKzA2tEWNwf62bxr",
+    referral: process.env.MIXSWAP_REFERRAL,
   };
 
   const response = await fetch(`/api/mixin/swap`, {
@@ -139,9 +138,22 @@ const MixswapCard = ({ tokenList }: MixswapCardProps) => {
     await toast.promise(
       new Promise<void>(async (resolve, reject) => {
         try {
+          // const tx = Transaction.from(txBuffer);
+          // const signature = await sendAndConfirmTransaction(connection, tx, [], {});
+
           const tx = VersionedTransaction.deserialize(txBuffer);
-          const signature = await sendTransaction(tx, connection, {});
-          await connection.confirmTransaction(signature, "confirmed");
+          const signature = await sendTransaction(tx, connection);
+          const latestBlockHash = await connection.getLatestBlockhash();
+          await connection.confirmTransaction(
+            {
+              blockhash: latestBlockHash.blockhash,
+              lastValidBlockHeight: latestBlockHash.lastValidBlockHeight,
+              signature: signature,
+            },
+            "confirmed"
+          );
+
+          // await connection.confirmTransaction(signature, "confirmed");
           resolve(signature as any);
 
           toast(
