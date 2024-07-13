@@ -68,7 +68,7 @@ async function swapToken(
     inAmount: Number(request.data.inAmount),
     slippage: slippage,
     source: request.data.source,
-    referral: process.env.MIXSWAP_REFERRAL,
+    referral: process.env.NEXT_PUBLIC_MIXSWAP_REFERRAL,
   };
 
   const response = await fetch(`/api/mixin/swap`, {
