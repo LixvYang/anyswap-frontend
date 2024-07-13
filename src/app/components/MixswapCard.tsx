@@ -296,7 +296,7 @@ const MixswapCard = ({ tokenList }: MixswapCardProps) => {
     const debounceTimer = setTimeout(() => {
       handleQuoteTokenClick();
       getAmount();
-    }, 2000);
+    }, 1000);
 
     return () => {
       clearTimeout(debounceTimer);

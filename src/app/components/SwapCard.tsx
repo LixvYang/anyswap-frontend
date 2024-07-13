@@ -79,7 +79,7 @@ const SwapCard = ({ coinList }: SwapCardProps) => {
 
     const debounceTimer = setTimeout(() => {
       fetchData();
-    }, 2000);
+    }, 1000);
 
     return () => {
       clearTimeout(debounceTimer);
