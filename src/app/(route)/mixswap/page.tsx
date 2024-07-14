@@ -3,11 +3,9 @@ import { Suspense } from "react";
 import { fetchMixswapTokenList } from "@/lib/actions";
 import { Card } from "@nextui-org/card";
 import { Skeleton } from "@nextui-org/skeleton";
-import { toast } from "react-toastify";
 
 const MixSwapPage = async () => {
   const tokenList = await fetchMixswapTokenList();
-
   return (
     <div className="flex flex-col items-center w-full">
       <Suspense

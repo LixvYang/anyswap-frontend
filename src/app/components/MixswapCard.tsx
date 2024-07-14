@@ -30,13 +30,18 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import {
   LAMPORTS_PER_SOL,
   PublicKey,
+  sendAndConfirmTransaction,
   VersionedTransaction,
+  sendAndConfirmRawTransaction,
+  TransactionMessage,
+  Transaction,
 } from "@solana/web3.js";
 import ListItem from "./Mixswap/ListItem";
 import QuoteRes from "./Mixswap/QuoteRes";
 import { IoIosRefresh } from "react-icons/io";
 import { CiWallet } from "react-icons/ci";
 import { toast } from "react-toastify";
+import bs58 from "bs58";
 
 interface MixswapCardProps {
   tokenList: MixswapToken[];
@@ -123,11 +128,16 @@ const MixswapCard = ({ tokenList }: MixswapCardProps) => {
   const [slippage, setSlippage] = React.useState(30);
   const [isInput, setIsInputValue] = React.useState(true);
   const [inputBalance, setInputBalance] = React.useState(0);
-  const { publicKey, sendTransaction } = useWallet();
+  const { publicKey, sendTransaction, signTransaction } = useWallet();
   const { connection } = useConnection();
   const mixswapStore = useMixswapStore((state) => state);
 
   async function handlePayClick(txStr: string) {
+    if (!txStr || txStr.length === 0) {
+      toast.error("Tx is empty");
+      return;
+    }
+
     if (!publicKey) return;
     const txSafe = txStr
       .replace(/\+/g, "-")
@@ -138,24 +148,33 @@ const MixswapCard = ({ tokenList }: MixswapCardProps) => {
     await toast.promise(
       new Promise<void>(async (resolve, reject) => {
         try {
-          // const tx = Transaction.from(txBuffer);
-          // const signature = await sendAndConfirmTransaction(connection, tx, [], {});
+          const tx: VersionedTransaction =
+            VersionedTransaction.deserialize(txBuffer);
 
-          const tx = VersionedTransaction.deserialize(txBuffer);
-          const signature = await sendTransaction(tx, connection);
-          // const latestBlockHash = await connection.getLatestBlockhash();
-          const signatureRes = await connection.confirmTransaction(
-            // {
-            //   blockhash: latestBlockHash.blockhash,
-            //   lastValidBlockHeight: latestBlockHash.lastValidBlockHeight,
-            //   signature: signature,
-            // },
-            signature,
-            "confirmed"
-          );
+          let signature = "";
 
-          // await connection.confirmTransaction(signature, "confirmed");
-          resolve(signature as any);
+          if (!signTransaction) {
+            signature = await sendTransaction(tx, connection, {});
+            const latestBlockHash = await connection.getLatestBlockhash();
+            await connection.confirmTransaction(
+              {
+                blockhash: latestBlockHash.blockhash,
+                lastValidBlockHeight: latestBlockHash.lastValidBlockHeight,
+                signature: signature,
+              },
+              "confirmed"
+            );
+          } else {
+            const transaction = await signTransaction(tx);
+            if (!transaction.signatures)
+              throw new Error("Transaction not signed!");
+
+            // signature = await connection.sendRawTransaction(
+            //   transaction.serialize()
+            // );
+
+            signature = bs58.encode(transaction.serialize());
+          }
 
           toast(
             <a
@@ -163,14 +182,14 @@ const MixswapCard = ({ tokenList }: MixswapCardProps) => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <span color="secondary">View tx on Solscan</span>
+              <span>View tx on Solscan</span>
             </a>,
             {
               position: "bottom-right",
             }
           );
+          resolve(signature as any);
         } catch (error) {
-          alert(error);
           reject(error);
         }
       }),
@@ -252,7 +271,7 @@ const MixswapCard = ({ tokenList }: MixswapCardProps) => {
   // 处理Swap点击 先quote查询价格，接着用结果去swap,得到tx 拼接得到 mixpay://pay 的形式, 跳转到支付页面
   const handleSwapClick = async () => {
     if (!publicKey) {
-      alert("Connect wallet first");
+      toast.error("Connect wallet first");
       return;
     }
     setIsSwapLoading(true);

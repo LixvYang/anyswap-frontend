@@ -22,8 +22,8 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <header>
-      <NextUINavbar onMenuOpenChange={setIsMenuOpen}>
+    <header className="z-100">
+      <NextUINavbar onMenuOpenChange={setIsMenuOpen} shouldHideOnScroll={true}>
         <NavbarContent>
           <NavbarMenuToggle
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
@@ -43,7 +43,7 @@ export default function Navbar() {
 
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
           {siteConfig.navItems.map((item, index) => (
-            <NavbarItem>
+            <NavbarItem key={item.label}>
               <>
                 <Link
                   color={item.link === pathname ? "secondary" : "foreground"}

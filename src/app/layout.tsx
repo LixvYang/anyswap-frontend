@@ -8,6 +8,7 @@ import Navbar from "@/app/components/NavBar";
 import Head from "next/head";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: {
@@ -37,6 +38,8 @@ export default function RootLayout({
       <Head>
         <meta name="theme-color" content="#7983C2" />
       </Head>
+      <Script src="https://terminal.jup.ag/main-v3.js" strategy="lazyOnload" />
+
       <body
         className={clsx(
           "min-h-screen bg-background font-sans antialiased",

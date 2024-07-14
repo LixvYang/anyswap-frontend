@@ -12,6 +12,10 @@ export const siteConfig = {
       label: "MixSwap",
       link: "/mixswap",
     },
+    {
+      label: "Jupiter",
+      link: "/jupiter",
+    },
   ],
   links: {
     github: "https://github.com/",

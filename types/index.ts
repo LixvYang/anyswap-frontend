@@ -1,4 +1,5 @@
 import { SVGProps } from "react";
+import { SwapMode } from "./enums";
 
 export type IconSvgProps = SVGProps<SVGSVGElement> & {
   size?: number;
@@ -167,4 +168,35 @@ export interface SwapInfo {
   outAmount: string;
   feeAmount: string;
   feeMint: string;
+}
+
+export type DEFAULT_EXPLORER =
+  | "Solana Explorer"
+  | "Solscan"
+  | "Solana Beach"
+  | "SolanaFM";
+
+export interface FormProps {
+  /** Default to `ExactInOrOut`. ExactOut can be used to get an exact output of a token (e.g. for Payments) */
+  swapMode?: SwapMode;
+  /** Initial amount to swap */
+  initialAmount?: string;
+  /** When true, user cannot change the amount (e.g. for Payments) */
+  fixedAmount?: boolean;
+  /** Initial input token to swap */
+  initialInputMint?: string;
+  /** When true, user cannot change the input token */
+  fixedInputMint?: boolean;
+  /** Initial output token to swap */
+  initialOutputMint?: string;
+  /** When true, user cannot change the output token (e.g. to buy your project's token) */
+  fixedOutputMint?: boolean;
+  /** Initial slippage to swap */
+  initialSlippageBps?: number;
+  platformFeeAndAccounts?: PlatformFeeAndAccounts;
+}
+
+export interface PlatformFeeAndAccounts {
+  referralAccount?: string;
+  feeBps?: number;
 }

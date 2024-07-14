@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@jup-ag/wallet-adapter": "^0.2.0",
     "@nextui-org/avatar": "^2.0.30",
     "@nextui-org/button": "^2.0.34",
     "@nextui-org/card": "^2.0.31",
@@ -27,6 +28,7 @@
     "@solana/wallet-adapter-react-ui": "^0.9.35",
     "@solana/wallet-adapter-wallets": "^0.19.32",
     "@solana/web3.js": "^1.94.0",
+    "bs58": "^6.0.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "dotenv-cli": "^7.4.2",

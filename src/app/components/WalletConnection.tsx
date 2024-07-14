@@ -20,6 +20,7 @@ import {
   ModalFooter,
   useDisclosure,
 } from "@nextui-org/modal";
+import { toast } from "react-toastify";
 
 //handle wallet balance fixed to 2 decimal numbers without rounding
 export function toFixed(num: number, fixed: number): string {
@@ -70,7 +71,7 @@ const WalletConnection = ({ connectText }: WalletConnectionProps) => {
         select(walletName);
         setOpen(false);
       } catch (error) {
-        console.log("wallet connection err : ", error);
+        toast.error("Failed to connect wallet");
       }
     }
   };

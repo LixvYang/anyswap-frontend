@@ -41,6 +41,20 @@ const ProviderItem = ({ provider }: ItemProps) => {
             </Button>
           </Link>
         )}
+        {provider.name === "Jupiter" && (
+          <Link href="/jupiter">
+            <Button variant="ghost" color="secondary">
+              Swap
+            </Button>
+          </Link>
+        )}
+        {provider.name === "ExinOne" && (
+          <Link href="https://app.eiduwejdk.com">
+            <Button variant="ghost" color="secondary">
+              Swap
+            </Button>
+          </Link>
+        )}
       </div>
     </div>
   );
