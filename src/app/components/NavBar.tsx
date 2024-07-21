@@ -56,8 +56,8 @@ export default function Navbar() {
           ))}
         </NavbarContent>
 
-        <NavbarContent className="flex basis-1/5 sm:basis-full" justify="end">
-          <WalletConnection connectText="Connect Wallet" />
+        <NavbarContent className="pr-20 flex basis-1/5 sm:basis-full" justify="end">
+          {/* <WalletConnection connectText="Connect Wallet" /> */}
           <ThemeSwitch />
         </NavbarContent>
 

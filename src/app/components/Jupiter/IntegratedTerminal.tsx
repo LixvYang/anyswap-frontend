@@ -2,6 +2,12 @@ import React, { useCallback, useEffect, useState } from "react";
 import { DEFAULT_EXPLORER, FormProps } from "../../../../types";
 import { useUnifiedWalletContext, useWallet } from "@jup-ag/wallet-adapter";
 
+declare global {
+  interface Window {
+    Jupiter: any;
+  } 
+}
+
 const IntegratedTerminal = (props: {
   rpcUrl: string;
   formProps: FormProps;

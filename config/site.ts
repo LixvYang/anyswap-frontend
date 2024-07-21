@@ -9,12 +9,16 @@ export const siteConfig = {
       link: "/",
     },
     {
-      label: "MixSwap",
-      link: "/mixswap",
+      label: "MixinSwap",
+      link: "/mixinswap",
     },
     {
       label: "Jupiter",
       link: "/jupiter",
+    },
+    {
+      label: "MixinWithdraw",
+      link: "/mixin/withdraw",
     },
   ],
   links: {

@@ -42,16 +42,11 @@ import { IoIosRefresh } from "react-icons/io";
 import { CiWallet } from "react-icons/ci";
 import { toast } from "react-toastify";
 import bs58 from "bs58";
+import { slippageSettings } from "./config";
 
 interface MixswapCardProps {
   tokenList: MixswapToken[];
 }
-
-const slippageSettings = [
-  { key: "30", label: "30" },
-  { key: "50", label: "50" },
-  { key: "100", label: "100" },
-];
 
 function formatPercentage(number: number) {
   // 将输入的数字转换为百分比
@@ -119,7 +114,7 @@ function formatDecimal(input: string, decimalPlaces: number): number {
   return parseFloat(resultStr);
 }
 
-const MixswapCard = ({ tokenList }: MixswapCardProps) => {
+const MixinswapCard = ({ tokenList }: MixswapCardProps) => {
   const isFirstRender = useRef(true);
   const [quoteResult, setQuoteResult] = React.useState<MixswapQuoteResponse>();
   const [isSwapLoading, setIsSwapLoading] = React.useState(false);
@@ -340,10 +335,11 @@ const MixswapCard = ({ tokenList }: MixswapCardProps) => {
   return (
     <>
       <Card className="max-w-lg w-full h-full max-h-lg">
-        <CardHeader className="flex items-center justify-between px-4">
-          <div className="flex justify-between items-center">
-            <>MixSwap</>
-          </div>
+        <div className="flex flex-end items-center justify-between px-4 pt-2">
+          <>MixSwap</>
+          <WalletConnection connectText="Connect Wallet" />
+        </div>
+        <CardHeader className="flex items-center justify-end px-4">
           <Select
             isRequired
             items={slippageSettings}
@@ -518,4 +514,4 @@ const MixswapCard = ({ tokenList }: MixswapCardProps) => {
   );
 };
 
-export default MixswapCard;
+export default MixinswapCard;

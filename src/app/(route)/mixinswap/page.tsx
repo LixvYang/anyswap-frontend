@@ -1,10 +1,10 @@
-import MixswapCard from "@/app/components/MixswapCard";
 import { Suspense } from "react";
 import { fetchMixswapTokenList } from "@/lib/actions";
 import { Card } from "@nextui-org/card";
 import { Skeleton } from "@nextui-org/skeleton";
+import MixinswapCard from "@/app/components/MixinswapCard";
 
-const MixSwapPage = async () => {
+const MixinSwapPage = async () => {
   const tokenList = await fetchMixswapTokenList();
   return (
     <div className="flex flex-col items-center w-full">
@@ -30,10 +30,10 @@ const MixSwapPage = async () => {
           </div>
         }
       >
-        <MixswapCard tokenList={tokenList} />
+        <MixinswapCard tokenList={tokenList} />
       </Suspense>
     </div>
   );
 };
 
-export default MixSwapPage;
+export default MixinSwapPage;

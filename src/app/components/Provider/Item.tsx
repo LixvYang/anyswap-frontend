@@ -34,8 +34,8 @@ const ProviderItem = ({ provider }: ItemProps) => {
             <p className="text-base font-semibold">{provider.resultAmount}</p>
           </p>
         </div>
-        {provider.name === "Mixswap" && (
-          <Link href="/mixswap">
+        {provider.name === "MixinSwap" && (
+          <Link href="/mixinswap">
             <Button variant="ghost" color="secondary">
               Swap
             </Button>

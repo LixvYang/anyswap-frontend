@@ -1,7 +1,6 @@
 "use client";
 
 import { useMixswapStore } from "@/app/providers/MixswapProviders";
-import { useSwapStore } from "@/app/providers/SwapProviders";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import Image from "next/image";
